@@ -4,7 +4,7 @@ info:
   version: 1.0.0
 
 paths:
-  /api/pupils/courses:
+  /api/pupils/courses/all:
     get:
       tags:
         - PupilsCourses
@@ -18,16 +18,23 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PupilCourseResponse'
+                  $ref: './schemas/pupil-course-response.yml'
 
-components:
-  schemas:
-    PupilCourseResponse:
-      type: object
-      properties:
-        pupil:
-          type: string
-        courseName:
-          type: string
-        courseStatus:
-          type: string
+  /api/pupils/courses:
+    get:
+      tags:
+        - PupilsCourses
+      summary: Filtered list of pupils with their courses and status
+      operationId: getPupilsCoursesByName
+      parameters:
+        - $ref: './parameters/pupil-name.yml'
+        - $ref: './parameters/course-name.yml'
+      responses:
+        '200':
+          description: List of pupils and their courses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/pupil-course-response.yml'

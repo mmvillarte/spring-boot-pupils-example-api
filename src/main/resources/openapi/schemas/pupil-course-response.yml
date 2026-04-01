@@ -1,0 +1,8 @@
+type: object
+properties:
+  pupil:
+    type: string
+  courseName:
+    type: string
+  courseStatus:
+    type: string

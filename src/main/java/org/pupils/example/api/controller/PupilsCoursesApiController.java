@@ -21,4 +21,9 @@ public class PupilsCoursesApiController implements PupilsCoursesApi {
     public ResponseEntity<List<PupilCourseResponse>> _getPupilsCourses() {
         return ResponseEntity.ok(service.getAllPupilsWithCourses());
     }
+
+    @Override
+    public ResponseEntity<List<PupilCourseResponse>> _getPupilsCoursesByName(String pupilName, String courseName) {
+        return ResponseEntity.ok(service.getPupilsWithCoursesByName(pupilName, courseName));
+    }
 }

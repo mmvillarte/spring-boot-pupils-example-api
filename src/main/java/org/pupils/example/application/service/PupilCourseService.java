@@ -30,5 +30,17 @@ public class PupilCourseService {
                 .toList();
     }
 
+    public List<PupilCourseResponse> getPupilsWithCoursesByName(String fullName, String courseName) {
 
+        return repository.findPupilAndCourseByName(fullName, courseName)
+                .stream()
+                .map(pc -> {
+                    PupilCourseResponse dto = new PupilCourseResponse();
+                    dto.setPupil(pc.getPupil().getLastName() + ", " + pc.getPupil().getFirstName());
+                    dto.setCourseName(pc.getCourse().getCourseName());
+                    dto.setCourseStatus(pc.getStatus().name());
+                    return dto;
+                })
+                .toList();
+    }
 }
