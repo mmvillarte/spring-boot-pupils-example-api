@@ -21,10 +21,10 @@ public interface PupilCourseRepository extends JpaRepository<PupilCourse, Long> 
             FROM PupilCourse pc
             JOIN FETCH pc.pupil p
             JOIN FETCH pc.course c
-            WHERE (:fullName IS NULL OR
-                       LOWER(CONCAT(p.firstName, ' ', p.lastName)) LIKE LOWER(CONCAT(:fullName, '%')))
-                  AND (:courseName IS NULL OR
-                       LOWER(c.courseName) LIKE LOWER(CONCAT(:courseName, '%')))
+            WHERE (:fullName IS NULL OR :fullName = '' OR
+                       LOWER(CONCAT(p.firstName, ' ', p.lastName)) LIKE LOWER(CONCAT('%', :fullName, '%')))
+                  AND (:courseName IS NULL OR :courseName = '' OR
+                       LOWER(c.courseName) LIKE LOWER(CONCAT('%', :courseName, '%')))
             """)
     List<PupilCourse> findPupilAndCourseByName(String fullName, String courseName);
 }

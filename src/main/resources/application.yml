@@ -1,9 +1,8 @@
 spring:
-  security.user:
-    name: ${APP_USER}
-    password: ${APP_PWD}
-    roles: { ROLE_VIEWER }
-
+# security.user:
+  #    name: ${APP_USER}
+  #    password: ${APP_PWD}
+  #    roles: { ROLE_VIEWER }
   application:
     name: spring-boot-pupils-example-api
 
