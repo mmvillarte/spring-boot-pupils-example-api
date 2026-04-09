@@ -18,7 +18,7 @@ public class PupilCourseService {
 
     public List<PupilCourseResponse> getAllPupilsWithCourses() {
 
-        return repository.findAllWithRelations()
+        return repository.findPupilAndCourseByName(null, null)
                 .stream()
                 .map(pc -> {
                     PupilCourseResponse dto = new PupilCourseResponse();
