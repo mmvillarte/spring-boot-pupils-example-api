@@ -1,0 +1,37 @@
+@startuml
+title Pupil Courses - Architectural Schema
+
+actor Angular as "angular-pupils-example"
+
+rectangle "spring-boot-pupils-example" {
+
+  package Controller {
+    component PupilsCoursesApiController
+  }
+
+  package Service {
+    component PupilsCourseService
+  }
+
+  package Repository {
+    component PupilCourseRepository
+  }
+
+  package SecurityConfig {
+    component PupilCourseBeanConfig
+  }
+
+}
+
+database "PostgreSQL DB" as db
+component Flyway
+
+Angular --> PupilsCoursesApiController : HTTP GET
+PupilsCoursesApiController --> PupilsCourseService
+PupilsCourseService --> PupilCourseRepository
+PupilCourseRepository --> db : Query/Persistence
+Flyway --> db : Data Migration
+SecurityConfig ..> PupilsCoursesApiController
+PupilCourseBeanConfig ..> PupilsCoursesApiController
+
+@enduml
