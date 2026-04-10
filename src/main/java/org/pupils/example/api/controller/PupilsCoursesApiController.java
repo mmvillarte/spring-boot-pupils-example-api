@@ -19,7 +19,7 @@ public class PupilsCoursesApiController implements PupilsCoursesApi {
 
     @Override
     public ResponseEntity<List<PupilCourseResponse>> _getPupilsCourses() {
-        return ResponseEntity.ok(service.getAllPupilsWithCourses());
+        return ResponseEntity.ok(service.getPupilsWithCoursesByName(null, null));
     }
 
     @Override
