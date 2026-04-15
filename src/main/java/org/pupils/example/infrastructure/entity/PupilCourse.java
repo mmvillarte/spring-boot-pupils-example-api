@@ -3,6 +3,8 @@ package org.pupils.example.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 import org.pupils.example.infrastructure.model.CourseStatus;
 
 @Entity
@@ -23,6 +25,7 @@ public class PupilCourse {
     private Course course;
 
     @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "STATUS", nullable = false)
     private CourseStatus status;
 

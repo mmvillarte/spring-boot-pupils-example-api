@@ -1,4 +1,4 @@
-package org.pupils.example.config;
+package org.pupils.example.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +12,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 @Configuration
-public class PupilCourseBeanConfig {
+public class PupilCourseSecurityBeanConfig {
 
+    // Security Configuration
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) {
         http.cors(cors -> corsConfigurationSource());

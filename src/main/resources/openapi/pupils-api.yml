@@ -19,6 +19,12 @@ paths:
                 type: array
                 items:
                   $ref: './schemas/pupil-course-response.yml'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/pupil-course-error.yml'
 
   /api/pupils/courses:
     get:
@@ -38,3 +44,32 @@ paths:
                 type: array
                 items:
                   $ref: './schemas/pupil-course-response.yml'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/pupil-course-error.yml'
+
+  /api/pupils/course/update:
+    post:
+      tags:
+        - PupilsCourses
+      summary: Update a course status related to a pupil
+      operationId: postPupilCourseUpdate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/pupil-course-update.yml'
+      responses:
+        '202':
+          description: Request to update the user correctly triggered
+
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/pupil-course-error.yml'

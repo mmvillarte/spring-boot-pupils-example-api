@@ -3,9 +3,5 @@ properties:
   id:
     type: integer
     format: int64
-  pupil:
-    type: string
-  courseName:
-    type: string
   courseStatus:
     type: string

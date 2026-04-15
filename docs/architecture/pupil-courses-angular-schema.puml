@@ -10,28 +10,41 @@ rectangle "spring-boot-pupils-example" {
   }
 
   package Service {
-    component PupilsCourseService
+    component PupilCourseService
+    component MessagingPublisherService
+    component MessagingListenerService
   }
 
   package Repository {
     component PupilCourseRepository
   }
 
-  package SecurityConfig {
-    component PupilCourseBeanConfig
+  package Config {
+    component PupilCourseSecurityBeanConfig
+    component PupilCourseRabbitMQBeanConfig
   }
-
 }
 
+queue "RabbitMQ" as mq
 database "PostgreSQL DB" as db
 component Flyway
 
-Angular --> PupilsCoursesApiController : HTTP GET
-PupilsCoursesApiController --> PupilsCourseService
-PupilsCourseService --> PupilCourseRepository
-PupilCourseRepository --> db : Query/Persistence
+Angular --> PupilsCoursesApiController : HTTP GET /api/pupils/courses
+PupilsCoursesApiController --> PupilCourseService : getPupilsWithCoursesByName(...)
+PupilCourseService --> PupilCourseRepository
+PupilCourseRepository --> db : SELECT
+
+Angular --> PupilsCoursesApiController : HTTP POST /api/pupils/course/update
+PupilsCoursesApiController --> MessagingPublisherService : publish(PupilCourseUpdate)
+MessagingPublisherService --> mq : send message
+mq --> MessagingListenerService : consume(PupilCourseUpdate)
+MessagingListenerService --> PupilCourseService : updatePupilCourse(...)
+PupilCourseService --> PupilCourseRepository : findById/save
+PupilCourseRepository --> db : UPDATE status
+
 Flyway --> db : Data Migration
-SecurityConfig ..> PupilsCoursesApiController
-PupilCourseBeanConfig ..> PupilsCoursesApiController
+PupilCourseSecurityBeanConfig ..> PupilsCoursesApiController
+PupilCourseRabbitMQBeanConfig ..> MessagingPublisherService
+PupilCourseRabbitMQBeanConfig ..> MessagingListenerService
 
 @enduml

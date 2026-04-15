@@ -24,6 +24,21 @@ spring:
     default-schema: PUPIL_COURSE_SCHEMA
     locations: classpath:db/migration
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: ${RABBITMQ_PWD}
+
+    listener:
+      simple:
+        acknowledge-mode: auto
+        retry:
+          enabled: true
+          initial-interval: 2000
+          max-attempts: 3
+          multiplier: 2
+
 logging:
   level:
     root: INFO

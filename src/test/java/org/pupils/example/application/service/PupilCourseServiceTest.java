@@ -7,12 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.pupils.example.infrastructure.entity.Course;
 import org.pupils.example.infrastructure.entity.Pupil;
 import org.pupils.example.infrastructure.entity.PupilCourse;
 import org.pupils.example.infrastructure.model.CourseStatus;
 import org.pupils.example.infrastructure.repository.PupilCourseRepository;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -50,7 +52,7 @@ class PupilCourseServiceTest {
     @Test
     void shouldReturnMappedPupilCourseResponse_whenDataExists() {
         // given
-        when(repository.findPupilAndCourseByName("Doe, John", "Spring Boot"))
+        when(repository.findPupilAndCourseByName("Doe, John", "Spring Boot", PupilCourseService.sort))
                 .thenReturn(List.of(pupilCourse));
 
         // when
@@ -66,13 +68,13 @@ class PupilCourseServiceTest {
         assertThat(response.getCourseStatus()).isEqualTo("IN_PROGRESS");
 
         verify(repository, times(1))
-                .findPupilAndCourseByName("Doe, John", "Spring Boot");
+                .findPupilAndCourseByName("Doe, John", "Spring Boot", PupilCourseService.sort);
     }
 
     @Test
     void shouldReturnEmptyList_whenNoResultsFound() {
         // given
-        when(repository.findPupilAndCourseByName(any(), any()))
+        when(repository.findPupilAndCourseByName(any(), any(), Mockito.any()))
                 .thenReturn(List.of());
 
         // when
@@ -86,13 +88,13 @@ class PupilCourseServiceTest {
     @Test
     void shouldCallRepositoryEvenWithNullParameters() {
         // given
-        when(repository.findPupilAndCourseByName(null, null))
+        when(repository.findPupilAndCourseByName(null, null, PupilCourseService.sort))
                 .thenReturn(List.of());
 
         // when
         service.getPupilsWithCoursesByName(null, null);
 
         // then
-        verify(repository).findPupilAndCourseByName(null, null);
+        verify(repository).findPupilAndCourseByName(null, null, PupilCourseService.sort);
     }
 }

@@ -1,6 +1,7 @@
 package org.pupils.example.infrastructure.repository;
 
 import org.pupils.example.infrastructure.entity.PupilCourse;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,5 +19,7 @@ public interface PupilCourseRepository extends JpaRepository<PupilCourse, Long> 
                   AND (:courseName IS NULL OR :courseName = '' OR
                        LOWER(c.courseName) LIKE LOWER(CONCAT('%', :courseName, '%')))
             """)
-    List<PupilCourse> findPupilAndCourseByName(String fullName, String courseName);
+    List<PupilCourse> findPupilAndCourseByName(String fullName,
+                                               String courseName,
+                                               Sort sort);
 }
